@@ -1,8 +1,13 @@
+
+
 <template>
-  <div class="exercise-2"></div>
+  <div class="exercise-2">
+    <h1>Exo 2</h1>
+  </div>
 </template>
 
 <script>
+
 export default {
   name: "Exercise2"
 };

@@ -1,8 +1,8 @@
 <template>
   <div class="exercise-1">
     <h3>Bienvenue, {{ firstname }} {{ lastname }}!</h3>
-    <h3>Bienvenue, {{ firstname +" "+ lastname  }}!</h3>
     <h3>Bienvenue, {{ `${firstname} ${lastname}` }}!</h3>
+    <h3>Bienvenue, {{ fullname }}!</h3>
 
     <hr>
     <p>
@@ -36,7 +36,11 @@ export default {
       currentDate: new Date().getFullYear()
     };
   },
-
+  computed: {
+    fullname() {
+      return `${this.firstname} ${this.lastname}`;
+    }
+  }
 };
 </script>
 
