@@ -32,3 +32,10 @@ export const users = [
     premium: false
   }
 ];
+
+export const getFullName = function() {
+  for (const user of users) {
+    return `${user.firstname} ${user.lastname}`;
+  }
+}
+
