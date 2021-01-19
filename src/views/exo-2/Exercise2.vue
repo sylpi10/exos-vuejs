@@ -23,9 +23,7 @@ export default {
      users: users
     };
   },
-  computed: {
 
-  },
   methods: {
     changeStatus: function(index) {
         let user = this.users[index];
