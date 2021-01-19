@@ -2,6 +2,7 @@
   <div class="exercise-3">
     <h1> Exo 3</h1>
   <Bouton
+          :hasError="true"
           :error="error"
           :green="true"
           :title="title"
@@ -23,7 +24,6 @@ import Bouton from "../../components/Bouton.vue";
 export default {
   components: { Bouton },
   name: "Exercise3"
-  
 };
 </script>
 
