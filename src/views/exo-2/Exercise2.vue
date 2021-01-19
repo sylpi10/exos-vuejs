@@ -1,6 +1,6 @@
 <template>
   <div class="exercise-2">
-    <div class="card" v-for="user in users" :key="user.id">
+    <div class="card" v-for="(user, index) in users" :key="index">
       <h2>{{ user.firstname }} {{ user.lastname }}</h2>
       <h3> {{ user.email }} </h3>
       <h4> {{ user.password }} </h4>
@@ -8,7 +8,7 @@
       <img v-bind:src="`https://loremflickr.com/280/160?random= ${user.id}`" alt="">
           
       <h5 v-if="user.premium"> Is premium </h5>
-      <button v-on:click="clicked">Premium status</button>
+      <button @click="changeStatus(index)">Premium status</button>
 
     </div>
   </div>
@@ -23,18 +23,28 @@ export default {
      users: users,
     };
   },
+  computed: {
+    // fullname() {
+    //   for (const user of this.users) {
+    //      return `${user.firstname} ${user.lastname}`;
+    //     }
+    // }
+    // getFullName() {
+    //   for (let index = 0; index < this.users.length; index++) {
+    //      return `${this.users[index].firstname} ${this.users[index].lastname}`;
+    //   }
+    // }
+  },
   methods: {
-    clicked: function() {
-        for (const user of users) {
-          if (user.premium != true) {
-            user.premium = true;
-          }else{
-            user.premium = false;
+    changeStatus: function(index) {
+          if (this.users[index].premium != true) {
+            return this.users[index].premium = true;
+          }else if (this.users[index].premium == true) {
+            return this.users[index].premium = false;
           }
-        }
     }
   }
-}
+};
 </script>
 
 <style lang="stylus" scoped>
