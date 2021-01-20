@@ -33,10 +33,11 @@
     <hr>
       <h2>4.3</h2>
     <nav class="navbar">
-        <div @click="selectedComponent = 'Exo4layout1'" class="nav-item">One</div>
-        <div @click="selectedComponent = 'Exo4layout2'" class="nav-item">Two</div>
+        <button @click="selectedComponent = 'Exo4layout1'" class="nav-item">One</button>
+        <button @click="selectedComponent = 'Exo4layout2'" class="nav-item">Two</button>
     </nav>
-      <component :is="selectedComponent">
+
+    <component :is="selectedComponent">
     </component>
 
      </main>
