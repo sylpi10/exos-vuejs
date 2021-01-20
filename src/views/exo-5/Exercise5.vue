@@ -4,14 +4,31 @@
     <h1>Exo 5</h1> 
     <BoutonAxios class="axiosBtn" @click.native="consume()">
     </BoutonAxios>
+    <div class="" v-if="!isEditing">
       <form action="" class="form" method="POST">
+        <span>Add a resto</span>
         <input type="text" v-model="nom" placeholder="nom" value="">
         <input type="text" v-model="type" placeholder="type" value="">
         <input type="text" v-model="adresse" placeholder="adresse"  value="">
         <input type="text" v-model="telephone" placeholder="tel" value="">
         <input type="text" v-model="plats" placeholder="plats" value="">
-        <button @click.prevent="sendPost()" >Add</button>
+        <button @click.prevent="sendPost()">Add</button>
       </form>
+    </div>
+
+    <div v-else>
+      <form class="form">
+        <span>Update a resto {{id}} </span>
+         <input type="text" v-model="nom" placeholder="nom" value="">
+        <input type="text" v-model="type" placeholder="type" value="">
+        <input type="text" v-model="adresse" placeholder="adresse"  value="">
+        <input type="text" v-model="telephone" placeholder="tel" value="">
+        <input type="text" v-model="plats" placeholder="plats" value="">
+        <button  @click.prevent="updateResto(id)"> Save </button>
+        <button v-on:click="cancelEdit(movie['.key'])">Cancel</button>
+      </form>
+    </div>
+
     </aside>
 
       <div class="wrapper">
@@ -34,18 +51,22 @@
            <template v-slot:tel>
              {{resto.telephone}}
           </template>
-           <template v-slot:plats class="plats">
+           <template v-slot:plats>
              <div class="plats">
           <hr>
              {{resto.plats}}
              </div>
           </template>
-          <div class="">
-            <button type="submit">Update</button>
-            <button type="submit"> X </button>
-          </div>
+          <template v-slot:buttons>
+            <div class="btns">
+              <button class="update" @click="toUpdate(resto.id)">Update</button>
+              <button class="delete"
+                @click.prevent="deleteResto(resto.id)"
+              > X </button>
+            </div>
+          </template>
       </Vignette>
-     
+
       </div>
   </div>
 </template>
@@ -60,19 +81,26 @@ export default {
   data() {
     return {
       info: [],
+      id: 0,
       nom: "",
       type: "",
       adresse: "",
       telephone: "",
-      plats: ""
+      plats: "",
+      isEditing: false
     }
   },
    methods: {
-    consume: function () {
-      axios
-        .get('https://restop-toulouse.herokuapp.com/restos')
-        .then(response => (this.info = response.data))
-    },
+    // consume: function () {
+    //   axios
+    //     .get('https://restop-toulouse.herokuapp.com/restos')
+    //     .then(response => (this.info = response.data))
+    // },
+    async consume() {
+  // GET request using axios with async/await
+    const response = await axios.get("https://restop-toulouse.herokuapp.com/restos");
+    this.info = response.data;
+  },
     sendPost() {
       const postData = { nom: this.nom, type: this.type, adresse: this.adresse,
        telephone: this.telephone, plats: this.plats};
@@ -80,7 +108,33 @@ export default {
         .post("https://restop-toulouse.herokuapp.com/restos", postData)
         .then(res => {
           console.log(res.data);
+          this.consume(); 
         });
+    },
+    deleteResto(idToDelete) {
+     axios
+      .delete(`https://restop-toulouse.herokuapp.com/restos/${idToDelete}`)
+      .then((response) => {
+        console.log(response)
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+    },
+    toUpdate(idToUpdate){
+      this.isEditing = true;
+      this.id = idToUpdate;
+    },
+    updateResto(idToUpdate){
+       this.id = idToUpdate;
+       const putData = {idToUpdate: this.id, nom: this.nom, type: this.type, adresse: this.adresse,
+       telephone: this.telephone, plats: this.plats};
+       axios
+      .put(`https://restop-toulouse.herokuapp.com/restos/${idToUpdate}`, putData)
+      .then((response) => {
+        console.log(response)
+         this.consume(); 
+    })
     }
    }
 };
@@ -133,5 +187,25 @@ export default {
   margin-top 40px;
   padding 20px;
 }
-
+.btns{
+  margin 8px;
+  display flex;
+  justify-content space-around;
+}
+.btns button{
+  border: none;
+  padding 4px 12px;
+  border-radius: 8px;
+  cursor pointer;
+}
+.btns button:hover{
+  opacity: .7;
+}
+.btns .update{
+  background-color lightgreen;
+}
+.btns .delete{
+  background-color red;
+  color: #fff;
+}
 </style>

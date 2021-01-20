@@ -18,7 +18,9 @@
         <div>
             <slot name="plats"> </slot>
         </div>    
-        
+        <div>
+            <slot name="buttons"> </slot>
+        </div>
     </div>    
 </template>
 

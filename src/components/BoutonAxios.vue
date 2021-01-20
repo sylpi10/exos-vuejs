@@ -1,7 +1,7 @@
 <template>
     <div class="exo5">
         <button> 
-        Consume API </button>
+        Show Restos </button>
     </div>    
 </template>
 
