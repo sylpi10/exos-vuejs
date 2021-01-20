@@ -25,7 +25,7 @@
         <input type="text" v-model="telephone" placeholder="tel" value="">
         <input type="text" v-model="plats" placeholder="plats" value="">
         <button  @click.prevent="updateResto(id)"> Save </button>
-        <button v-on:click="cancelEdit(movie['.key'])">Cancel</button>
+        <!-- <button v-on:click="cancelEdit()">Cancel</button> -->
       </form>
     </div>
 
@@ -142,8 +142,13 @@ export default {
          this.consume(); 
     })
     }
-   }
-};
+   },
+  computed: {
+     getDatas : function(){
+         return this.consume();
+      }
+}
+}
 </script>
 
 <style lang="stylus" scoped>
