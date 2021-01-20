@@ -18,7 +18,7 @@
 
     <div v-else>
       <form class="form">
-        <span>Update a resto {{id}} </span>
+        <span>Update resto {{id}} </span>
          <input type="text" v-model="nom" placeholder="nom" value="">
         <input type="text" v-model="type" placeholder="type" value="">
         <input type="text" v-model="adresse" placeholder="adresse"  value="">
@@ -130,9 +130,15 @@ export default {
        const putData = {idToUpdate: this.id, nom: this.nom, type: this.type, adresse: this.adresse,
        telephone: this.telephone, plats: this.plats};
        axios
-      .put(`https://restop-toulouse.herokuapp.com/restos/${idToUpdate}`, putData)
-      .then((response) => {
+        .put(`https://restop-toulouse.herokuapp.com/restos/${idToUpdate}`, putData)
+        .then((response) => {
         console.log(response)
+          this.nom = '',
+          this.type = '',
+          this.adresse = '',
+          this.telephone = '',
+          this.plats = '',
+          this.isEditing = false
          this.consume(); 
     })
     }
